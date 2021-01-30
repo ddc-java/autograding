@@ -1,0 +1,15 @@
+name: Extract
+description: Extract compiled test classes from JAR.
+inputs:
+  test-archive:
+    description: JAR file name, with extension, without directory.
+    required: true
+  extract-to:
+    description: Destination directory.
+    required: true
+runs:
+  using: composite
+  steps:
+    - run: ${{ github.action_path }}/extract.sh ${{ inputs.test-archive }} ${{ inputs.extract-to }}
+      shell: bash
+      
