@@ -1,5 +1,5 @@
 name: Extract
-description: Extract compiled test classes from JAR.
+description: Extract compiled test classes.
 inputs:
   test-archive:
     description: JAR file name, with extension, without directory.
