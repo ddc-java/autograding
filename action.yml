@@ -10,6 +10,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: unzip ${{ github.action_path }}/archives/${{ inputs.test-archive }} ${{ inputs.extract-to }}
+    - run: unzip ${{ github.action_path }}/archives/${{ inputs.test-archive }} -d ${{ inputs.extract-to }}
       shell: bash
       
