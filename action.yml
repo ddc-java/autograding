@@ -1,5 +1,5 @@
 name: Extract
-description: Extract compiled test classes.
+description: Prepare to run & autograde JAR-packaged tests.
 inputs:
   test-archive:
     description: JAR file name, with extension, without directory.
