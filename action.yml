@@ -20,5 +20,5 @@ runs:
       run: ${{ github.action_path}}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }} ${{ inputs.test-extract-destination }}
       shell: bash
     - name: Copy configuration
-      run: cp ${{ inputs.configuration-source }} ${{ inputs.configuration-destination }}
+      run: ${{ github.action_path}}/copy.sh ${{ inputs.configuration-source }} ${{ inputs.configuration-destination }}
       shell: bash
