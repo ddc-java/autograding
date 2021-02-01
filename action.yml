@@ -4,12 +4,21 @@ inputs:
   test-archive:
     description: JAR file name, with extension, without directory.
     required: true
-  extract-to:
-    description: Destination directory.
+  test-extract-destination:
+    description: Destination directory of extracted test classes.
+    required: true
+  configuration-source:
+    description: Path of autograding configuration file.
+    required: true
+  configuration-destination:
+    description: Destination directory for autograding configuration.
     required: true
 runs:
   using: composite
   steps:
-    - run: ${{ github.action_path}}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }} ${{ inputs.extract-to }}
+    - name: Extract tests
+      run: ${{ github.action_path}}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }} ${{ inputs.test-extract-destination }}
       shell: bash
-      
+    - name: Copy configuration
+      run: cp ${{ inputs.configuration-source }} ${{ inputs.configuration-destination }}
+      shell: bash
