@@ -17,11 +17,10 @@ def autogradingTaskName = 'autograde'
 def autogradingDir = 'autograding'
 
 def copyReport = tasks.register('copyReport', Copy) {
-    from "$testReportDir/$autogradingTaskName/index.html"
-    into "$testReportDir/combined/"
-    rename {
-        project.hasProperty('reportName') ? "${project.reportName}.html" : null
+    from "$testReportDir/$autogradingTaskName" {
+        include '**/*'
     }
+    into "$testReportDir/combined/${project.reportName}/"
 }
 
 def autograde = tasks.register(autogradingTaskName, Test) {
