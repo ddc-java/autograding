@@ -38,5 +38,5 @@ runs:
       run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/
       shell: bash
     - name: Copy script
-      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}//autograding.gradle ${{ inputs.workspace }}/${{ inputs.extract-destination }}/
+      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}//autograding.gradle ${{ inputs.workspace }}/
       shell: bash

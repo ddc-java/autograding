@@ -13,6 +13,31 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+group 'edu.cnm.deepdive'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def junitVersion = '5.7.1'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+}
+
+test {
+    useJUnitPlatform()
+}
+
 def autogradingTaskName = 'autograde'
 def autogradingDir = 'autograding'
 
@@ -23,7 +48,7 @@ def copyReport = tasks.register('copyReport', Copy) {
     into "$testReportDir/combined/${project.reportName}/"
 }
 
-def autograde = tasks.register(autogradingTaskName, Test) {
+tasks.register(autogradingTaskName, Test) {
     useJUnitPlatform()
     compileTestJava.enabled = false
     processTestResources.enabled = false
