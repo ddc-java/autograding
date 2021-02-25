@@ -1,1 +1,16 @@
-/.idea
+/.idea/
+/.gradle/
+/.settings/
+/bin/
+/build/
+/captures/
+/out/
+/target/
+
+*.iml
+.classpath
+.DS_Store
+.floo
+.flooignore
+.project
+local.properties

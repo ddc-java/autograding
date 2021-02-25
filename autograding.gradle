@@ -36,15 +36,11 @@ dependencies {
 
 def autogradingDir = 'autograding'
 
-def copyReport = tasks.register('copyReport', Copy) {
+task copyReport(type: Copy) {
     from("${testReportDir}/test") {
         include '**/*'
     }
     into "${testReportDir}/combined/${project.reportName}/"
-}
-
-task dummy {
-    finalizedBy copyReport
 }
 
 test {
