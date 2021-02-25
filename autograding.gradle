@@ -34,27 +34,26 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 }
 
-test {
-    useJUnitPlatform()
-}
-
-def autogradingTaskName = 'autograde'
 def autogradingDir = 'autograding'
 
 def copyReport = tasks.register('copyReport', Copy) {
-    from "$testReportDir/$autogradingTaskName" {
+    from("${testReportDir}/test") {
         include '**/*'
     }
-    into "$testReportDir/combined/${project.reportName}/"
+    into "${testReportDir}/combined/${project.reportName}/"
 }
 
-tasks.register(autogradingTaskName, Test) {
+task dummy {
+    finalizedBy copyReport
+}
+
+test {
     useJUnitPlatform()
     compileTestJava.enabled = false
     processTestResources.enabled = false
     dependsOn classes
     classpath -= testClassesDirs
-    classpath -= files("$buildDir/resources/test")
+    classpath -= files("${buildDir}/resources/test")
     testClassesDirs = files(autogradingDir)
     classpath += testClassesDirs
     testLogging {
