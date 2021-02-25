@@ -14,24 +14,29 @@
 name: Extract
 description: "Prepare to run & autograde JAR-packaged tests."
 inputs:
+  workspace:
+    description: "Base directory of project under test."
+    required: true
   test-archive:
-    description: JAR file name, without extension or directory.
+    description: "Base name for JAR file ('.jar' appended)."
     required: true
-  test-extract-destination:
-    description: Destination directory of extracted test classes.
-    required: true
-  configuration-source:
-    description: Path of autograding configuration file.
-    required: true
+  extract-destination:
+    description: "Destination subdirectory of extracted test classes & configuration."
+    required: false
+    default: autograding
   configuration-destination:
-    description: Destination directory for autograding configuration.
-    required: true
+    description: "Destination subdirectory for autograding configuration."
+    required: false
+    default: .github/classroom
 runs:
   using: composite
   steps:
     - name: Extract tests
-      run: ${{ github.action_path }}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }}.jar ${{ inputs.test-extract-destination }}
+      run: ${{ github.action_path }}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }}.jar ${{ inputs.workspace }}/${{ inputs.extract-destination }}/
       shell: bash
     - name: Copy configuration
-      run: ${{ github.action_path }}/copy.sh ${{ inputs.configuration-source }} ${{ inputs.configuration-destination }}
+      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/
+      shell: bash
+    - name: Copy script
+      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}//autograding.gradle ${{ inputs.workspace }}/${{ inputs.extract-destination }}/
       shell: bash
