@@ -28,6 +28,10 @@ inputs:
     description: "Destination subdirectory for autograding configuration."
     required: false
     default: .github/classroom
+  autograding-script:
+    description: "Build script with autograding tasks."
+    required: false
+    default: autograding.gradle
 runs:
   using: composite
   steps:
@@ -38,5 +42,5 @@ runs:
       run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/
       shell: bash
     - name: Copy script
-      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}//autograding.gradle ${{ inputs.workspace }}/
+      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}//${{ inputs.autograding-script }} ${{ inputs.workspace }}/
       shell: bash
