@@ -39,18 +39,8 @@ runs:
       run: ${{ github.action_path }}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }}.jar ${{ inputs.workspace }}/${{ inputs.extract-destination }}/
       shell: bash
     - name: Copy Gradle configuration
-      if: inputs.build-system == 'gradle'
-      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/autograding.json
-      shell: bash
-    - name: Copy Maven configuration
-      if: inputs.build-system == 'maven'
-      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding-maven.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/autograding.json
+      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/
       shell: bash
     - name: Copy Gradle script
-      if: inputs.build-system == 'gradle'
       run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}/autograding.gradle ${{ inputs.workspace }}/
-      shell: bash
-    - name: Copy Maven script
-      if: inputs.build-system == 'maven'
-      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}/autograding.xml ${{ inputs.workspace }}/
       shell: bash
