@@ -20,6 +20,10 @@ inputs:
   test-archive:
     description: "Base name for JAR file ('.jar' appended)."
     required: true
+  build-system: 
+    description: "Build system used for the project (Maven or Gradle)."
+    required: false
+    default: gradle
   extract-destination:
     description: "Destination subdirectory of extracted test classes & configuration."
     required: false
@@ -28,19 +32,25 @@ inputs:
     description: "Destination subdirectory for autograding configuration."
     required: false
     default: .github/classroom
-  autograding-script:
-    description: "Build script with autograding tasks."
-    required: false
-    default: autograding.gradle
 runs:
   using: composite
   steps:
     - name: Extract tests
       run: ${{ github.action_path }}/extract.sh ${{ github.action_path }}/archives/${{ inputs.test-archive }}.jar ${{ inputs.workspace }}/${{ inputs.extract-destination }}/
       shell: bash
-    - name: Copy configuration
-      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/
+    - name: Copy Gradle configuration
+      if: inputs.build-system == 'gradle'
+      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/autograding.json
       shell: bash
-    - name: Copy script
-      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}//${{ inputs.autograding-script }} ${{ inputs.workspace }}/
+    - name: Copy Maven configuration
+      if: inputs.build-system == 'maven'
+      run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding-maven.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/autograding.json
+      shell: bash
+    - name: Copy Gradle script
+      if: inputs.build-system == 'gradle'
+      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}/autograding.gradle ${{ inputs.workspace }}/
+      shell: bash
+    - name: Copy Maven script
+      if: inputs.build-system == 'maven'
+      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}/autograding.xml ${{ inputs.workspace }}/
       shell: bash
