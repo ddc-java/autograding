@@ -32,6 +32,10 @@ inputs:
     description: "Destination subdirectory for autograding configuration."
     required: false
     default: .github/classroom
+  gradle-project:
+    description: "rootProject.name for dynamic creation of Gradle project."
+    required: false
+    default: ""
 runs:
   using: composite
   steps:
@@ -42,5 +46,10 @@ runs:
       run: ${{ github.action_path }}/copy.sh ${{ inputs.workspace }}/${{ inputs.extract-destination }}/autograding.json ${{ inputs.workspace }}/${{ inputs.configuration-destination }}/
       shell: bash
     - name: Copy Gradle script
-      run: ${{ github.action_path }}/copy.sh ${{ github.action_path }}/autograding.gradle ${{ inputs.workspace }}/
+      run: cp -r ${{ github.action_path }}/gradle/. ${{ inputs.workspace }}/
       shell: bash
+    - name: Create settings.gradle file
+      if: ${{ inputs.gradle-project != '' }}
+      run: >
+        echo "rootProject.name = '${{ inputs.gradle-project }}'"
+      shell: bash 
