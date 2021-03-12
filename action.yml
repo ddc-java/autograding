@@ -48,8 +48,3 @@ runs:
     - name: Copy Gradle script
       run: cp -r ${{ github.action_path }}/gradle/. ${{ inputs.workspace }}/
       shell: bash
-    - name: Create settings.gradle file
-      if: inputs.gradle-project != ''
-      run: >
-        echo "rootProject.name = '${{ inputs.gradle-project }}'"
-      shell: bash 
