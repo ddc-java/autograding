@@ -48,3 +48,6 @@ runs:
     - name: Copy Gradle script
       run: cp -r ${{ github.action_path }}/gradle/. ${{ inputs.workspace }}/
       shell: bash
+    - name: Make gradlew executable
+      run: chmod +x ${{ inputs.workspace }}/gradlew
+      shell: bash
